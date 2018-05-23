@@ -1,0 +1,19 @@
+<h1>Bookmarks</h1>
+
+{% if bookmarks %}
+
+Bookmarks:
+<ul>
+  {% for bookmark in bookmarks %}
+  <li>
+    <a href="{{bookmark.url}}">{{bookmark.name}}</a>
+    <div>Created at {{bookmark.created_at}}</div>
+    <div>{{bookmark.notes}}</div>
+  </li>
+  {% endfor %}
+</ul>
+
+{% else %}
+Yes, we have no bookmarks
+
+{% endif %}
