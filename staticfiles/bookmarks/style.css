@@ -1,0 +1,52 @@
+body {
+  background: #777777;
+  margin: 0px;
+  padding: 0px;
+  font-family: Arial, sans-serif;
+}
+
+.Title {
+  background: #999999;
+  padding:  10px 30px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.Site-Container {
+  margin: 0px 30px;
+}
+
+.Bookmark-Notes {
+  margin: 5px 0;
+}
+
+.Bookmark-Date {
+  font-size: 13px;
+  font-style: italic;
+  color: #555555;
+}
+
+#id_url {
+  margin-left: 10px;
+  background-color: #AAAAAA;
+  border-color: #000000;
+}
+
+#id_name {
+  background-color: #AAAAAA;
+  border-color: #000000;
+}
+
+#id_notes {
+  background-color: #AAAAAA;
+  border-color: #000000;
+  border-width: 2px;
+}
+
+li {
+  margin: 15px 0px;
+}
+
+a {
+  color: #550000;
+}
