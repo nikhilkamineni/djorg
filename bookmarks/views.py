@@ -29,3 +29,8 @@ def index(request):
     }
 
     return render(request, 'bookmarks/index.html', context)
+
+def login(request):
+    context = {}
+    if request.method == 'GET':
+        return render(request, 'bookmarks/login.html', context)

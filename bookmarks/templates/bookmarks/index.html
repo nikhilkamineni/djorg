@@ -1,42 +1,53 @@
-<h1>Bookmarks</h1>
+{% load static %}
 
-{% if bookmarks %}
+<link rel="stylesheet" type="text/css" href="{% static 'bookmarks/style.css' %}" />
 
-Bookmarks:
-<ul>
-  {% for bookmark in bookmarks %}
-  <li>
-    <a href="{{bookmark.url}}">{{bookmark.name}}</a>
-    <div>Created at {{bookmark.created_at}}</div>
-    <div>{{bookmark.notes}}</div>
-  </li>
-  {% endfor %}
-</ul>
+<div class="Title">
+  <h1>Bookmarks</h1>
+</div>
 
-{% else %}
-You have no bookmarks
-{% endif %}
+<div class="Site-Container">
+  {% if bookmarks %}
+
+  <h3>Public Bookmarks:</h3>
+  <ul>
+    {% for bookmark in bookmarks %}
+    <li>
+      <a href="{{bookmark.url}}">{{bookmark.name}}</a>
+      <div class="Bookmark-Notes">{{bookmark.notes}}</div>
+      <div class="Bookmark-Date">Created at {{bookmark.created_at}}</div>
+    </li>
+    {% endfor %}
+  </ul>
+
+  {% else %}
+  You have no bookmarks
+  {% endif %}
 
 
-Personal Bookmarks:
-{% if personal_bookmarks %}
-<ul>
-  {% for bookmark in personal_bookmarks %}
-  <li>
-    <a href="{{bookmark.url}}">{{bookmark.name}}</a>
-    <div>Created at {{bookmark.created_at}}</div>
-    <div>{{bookmark.notes}}</div>
-  </li>
-  {% endfor %}
-</ul>
+  <h3>Personal Bookmarks:</h3>
+  {% if personal_bookmarks %}
+  <ul>
+    {% for bookmark in personal_bookmarks %}
+    <li>
+      <a href="{{bookmark.url}}">{{bookmark.name}}</a>
+      <div class="Bookmark-Notes">{{bookmark.notes}}</div>
+      <div class="Bookmark-Date">Created at {{bookmark.created_at}}</div>
+    </li>
+    {% endfor %}
+  </ul>
 
-{% else %}
-You have no personal bookmarks
-{% endif %}
+  {% else %}
+  You have no personal bookmarks
+  {% endif %}
 
-<h2>Add New Bookmark</h2>
-<form method="POST" class="bookmark-form">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit" class="save btn btn-default">Save</button>
-</form>
+  <div class="Add-Bookmark">
+    <h3>Add New Bookmark:</h3>
+    <form method="POST" class="bookmark-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+  </div>
+
+</div>
