@@ -16,9 +16,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from django.views.generic import TemplateView
+from rest_framework import routers
+from notes.api import NoteViewSet
+
+router = routers.DefaultRouter()
+router.register(r'notes', NoteViewSet)
 
 urlpatterns = [
-    path('', TemplateView.as_view(template_name='bookmarks/djorg_base.html')),
+    # path('', TemplateView.as_view(template_name='bookmarks/djorg_base.html')),
+    path('', TemplateView.as_view(template_name='index.html')),
+    path('api/', include(router.urls)),
     path('admin/', admin.site.urls),
-    path('bookmarks/', include('bookmarks.urls'))
+    path('bookmarks/', include('bookmarks.urls')),
+    path('notes/', include('notes.urls'))
 ]

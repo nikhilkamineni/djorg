@@ -1,6 +1,7 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 from .models import Bookmark, PersonalBookmark
-from .forms import BookmarkForm
+from .forms import BookmarkForm, LoginForm
 
 def index(request):
     # import pdb; pdb.set_trace()
@@ -34,3 +35,7 @@ def login(request):
     context = {}
     if request.method == 'GET':
         return render(request, 'bookmarks/login.html', context)
+
+    if request.method == 'POST':
+        print(request.username)
+        return HttpResponse("HELLO FROM LOGIN")

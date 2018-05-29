@@ -1,1 +1,15 @@
+
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'bookmarks/style.css' %}" />
+  
 <h1>Login to access your bookmarks</h1>
+
+<div>
+<form method="POST" accept-charset="utf-8" action="">
+    {% csrf_token %}
+    <input type="text" value="username" />
+    <input type="password" value="password" />
+    <input class="button small" type="submit" value="Login"/>
+</form>
+</div>
