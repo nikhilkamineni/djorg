@@ -8,12 +8,14 @@ class NoteSerializer(serializers.HyperlinkedModelSerializer):
         user = self.context['request'].user
 
         note = Note.objects.create(user=user, **validated_data)
+        print(self.user)
 
         return note
 
     class Meta:
         model = Note
         fields = ('title', 'content')
+
 
 
 class NoteViewSet(viewsets.ModelViewSet):

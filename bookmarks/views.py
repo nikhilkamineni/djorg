@@ -32,10 +32,8 @@ def index(request):
     return render(request, 'bookmarks/index.html', context)
 
 def login(request):
-    context = {}
+    context = {
+        'form': LoginForm
+    }
     if request.method == 'GET':
         return render(request, 'bookmarks/login.html', context)
-
-    if request.method == 'POST':
-        print(request.username)
-        return HttpResponse("HELLO FROM LOGIN")

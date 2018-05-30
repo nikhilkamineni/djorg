@@ -18,9 +18,11 @@ from django.urls import include, path
 from django.views.generic import TemplateView
 from rest_framework import routers
 from notes.api import NoteViewSet
+from bookmarks.api import BookmarkViewSet
 
 router = routers.DefaultRouter()
 router.register(r'notes', NoteViewSet)
+router.register(r'bookmarks', BookmarkViewSet)
 
 urlpatterns = [
     # path('', TemplateView.as_view(template_name='bookmarks/djorg_base.html')),

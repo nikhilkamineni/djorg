@@ -50,3 +50,13 @@ li {
 a {
   color: #550000;
 }
+
+.Notes-All {
+  display: flex;
+}
+
+.Note-Container {
+  border: 1px solid black;
+  margin: 15px;
+  padding: 15px;
+}
