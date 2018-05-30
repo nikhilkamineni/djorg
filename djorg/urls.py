@@ -20,6 +20,8 @@ from rest_framework import routers
 from notes.api import NoteViewSet
 from bookmarks.api import BookmarkViewSet
 
+from graphene_django.views import GraphQLView
+
 router = routers.DefaultRouter()
 router.register(r'notes', NoteViewSet)
 router.register(r'bookmarks', BookmarkViewSet)
@@ -27,6 +29,7 @@ router.register(r'bookmarks', BookmarkViewSet)
 urlpatterns = [
     # path('', TemplateView.as_view(template_name='bookmarks/djorg_base.html')),
     path('', TemplateView.as_view(template_name='index.html')),
+    path('graphql/', GraphQLView.as_view(graphiql=True)),
     path('api/', include(router.urls)),
     path('admin/', admin.site.urls),
     path('bookmarks/', include('bookmarks.urls')),
