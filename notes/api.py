@@ -1,5 +1,10 @@
 from rest_framework import serializers, viewsets
+from django.contrib.auth.models import User
 from .models import Note
+
+class UserSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    username = serializers.CharField(max_length=100)
 
 class NoteSerializer(serializers.HyperlinkedModelSerializer):
 
@@ -11,9 +16,11 @@ class NoteSerializer(serializers.HyperlinkedModelSerializer):
 
         return note
 
+    user = UserSerializer(required=False)
+
     class Meta:
         model = Note
-        fields = ('title', 'content')
+        fields = ('title', 'content', 'user')
 
 
 

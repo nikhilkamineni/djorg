@@ -1,7 +1,14 @@
-from django.conf import settings
-from graphene_django import DjangoObjectType
 import graphene
+from graphene_django import DjangoObjectType
+
+from django.conf import settings
 from .models import Note as NoteModel
+from django.contrib.auth.models import User as UserModel
+
+class User(DjangoObjectType):
+    class Meta:
+        model = UserModel
+
 
 class Note(DjangoObjectType):
     class Meta:
@@ -26,5 +33,5 @@ class Query(graphene.ObjectType):
 
 
 # Add a schema and attach the query
-schema = graphene.Schema(query=Query)
+schema = graphene.Schema(query=Query, types=[Note, User])
 
