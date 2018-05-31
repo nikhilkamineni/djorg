@@ -1,5 +1,7 @@
 from rest_framework import serializers, viewsets
 from .models import Bookmark, PersonalBookmark
+from django.contrib.auth.models import User
+
 
 class BookmarkSerializer(serializers.HyperlinkedModelSerializer):
 

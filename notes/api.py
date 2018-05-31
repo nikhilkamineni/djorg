@@ -1,10 +1,14 @@
 from rest_framework import serializers, viewsets
 from django.contrib.auth.models import User
-from .models import Note
+from .models import Note, Tag
 
 class UserSerializer(serializers.Serializer):
     email = serializers.EmailField()
     username = serializers.CharField(max_length=100)
+
+class TagSerializer(serializers.Serializer):
+    name = serializers.CharField()
+    color = serializers.CharField(max_length=15)
 
 class NoteSerializer(serializers.HyperlinkedModelSerializer):
 
@@ -17,10 +21,11 @@ class NoteSerializer(serializers.HyperlinkedModelSerializer):
         return note
 
     user = UserSerializer(required=False)
+    tags = TagSerializer(many=True)
 
     class Meta:
         model = Note
-        fields = ('title', 'content', 'user')
+        fields = ('title', 'content', 'user', 'tags')
 
 
 
@@ -33,6 +38,6 @@ class NoteViewSet(viewsets.ModelViewSet):
         # import pdb; pdb.set_trace()
 
         if user.is_anonymous:
-            return Note.objects.none()
+            return Note.objects.all()
         else:
             return Note.objects.filter(user=user)

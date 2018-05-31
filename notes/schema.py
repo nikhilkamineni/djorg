@@ -3,11 +3,17 @@ from graphene_django import DjangoObjectType
 
 from django.conf import settings
 from .models import Note as NoteModel
+from .models import Tag as TagModel
 from django.contrib.auth.models import User as UserModel
 
 class User(DjangoObjectType):
     class Meta:
         model = UserModel
+
+
+class Tag(DjangoObjectType):
+    class Meta:
+        model = TagModel
 
 
 class Note(DjangoObjectType):
@@ -33,5 +39,5 @@ class Query(graphene.ObjectType):
 
 
 # Add a schema and attach the query
-schema = graphene.Schema(query=Query, types=[Note, User])
+schema = graphene.Schema(query=Query, types=[Note, User, Tag])
 
