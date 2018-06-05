@@ -1,6 +1,8 @@
 from rest_framework import serializers, viewsets
 from django.contrib.auth.models import User
 from .models import Note, Tag
+from decouple import config
+
 
 class UserSerializer(serializers.Serializer):
     email = serializers.EmailField()
@@ -11,11 +13,16 @@ class TagSerializer(serializers.Serializer):
     name = serializers.CharField()
     color = serializers.CharField(max_length=15)
 
+    class Meta:
+        model = Tag
+        fields = ("name", "color")
+
+
 class NoteSerializer(serializers.HyperlinkedModelSerializer):
 
     def create(self, validated_data):
         # import pdb; pdb.set_trace()
-        user = self.context['request'].user
+        user = self.context["request"].user
 
         note = Note.objects.create(user=user, **validated_data)
 
@@ -26,8 +33,7 @@ class NoteSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Note
-        fields = ('title', 'content', 'user', 'tags')
-
+        fields = ("title", "content", "user", "tags")
 
 
 class NoteViewSet(viewsets.ModelViewSet):
@@ -38,7 +44,14 @@ class NoteViewSet(viewsets.ModelViewSet):
         user = self.request.user
         # import pdb; pdb.set_trace()
 
-        if user.is_anonymous:
+        if config("DEBUG"):
             return Note.objects.all()
+        if user.is_anonymous:
+            return Note.objects.none()
         else:
             return Note.objects.filter(user=user)
+
+
+class NoteTagViewSet(viewsets.ModelViewSet):
+    serializer_class = TagSerializer
+    queryset = Tag.objects.all()

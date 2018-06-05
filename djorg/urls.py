@@ -18,13 +18,14 @@ from django.urls import include, path, re_path
 from django.views.generic import TemplateView
 from rest_framework import routers
 from rest_framework.authtoken import views
-from notes.api import NoteViewSet
+from notes.api import NoteViewSet, NoteTagViewSet
 from bookmarks.api import BookmarkViewSet
 
 from graphene_django.views import GraphQLView
 
 router = routers.DefaultRouter()
 router.register(r'notes', NoteViewSet)
+router.register(r'notetags', NoteTagViewSet)
 router.register(r'bookmarks', BookmarkViewSet)
 
 urlpatterns = [
