@@ -6,6 +6,7 @@ class UserSerializer(serializers.Serializer):
     email = serializers.EmailField()
     username = serializers.CharField(max_length=100)
 
+
 class TagSerializer(serializers.Serializer):
     name = serializers.CharField()
     color = serializers.CharField(max_length=15)
