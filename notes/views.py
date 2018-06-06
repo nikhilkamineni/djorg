@@ -15,16 +15,17 @@ def index(request):
         else:
             print("error saving new note")
 
-    if request.user.is_anonymous:
-        notes = None
-    else:
-        notes = Note.objects.filter(user=request.user)
+    if request.method == 'GET':
+        if request.user.is_anonymous:
+            notes = None
+        else:
+            notes = Note.objects.filter(user=request.user)
 
-    context = {
-        'notes': notes,
-        'user': request.user,
-        'form': NoteForm
-    }
+        context = {
+            'notes': notes,
+            'user': request.user,
+            'form': NoteForm
+        }
 
-    return render(request, 'notes/index.html', context)
+        return render(request, 'notes/index.html', context)
 

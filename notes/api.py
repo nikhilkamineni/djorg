@@ -7,21 +7,26 @@ from decouple import config
 class UserSerializer(serializers.Serializer):
     email = serializers.EmailField()
     username = serializers.CharField(max_length=100)
+    id = serializers.CharField()
+
+    class Meta:
+        model = User
+        fields = ("username", "email", "id")
 
 
 class TagSerializer(serializers.Serializer):
     name = serializers.CharField()
-    color = serializers.CharField(max_length=15)
+    color = serializers.CharField()
+    created_at = serializers.DateTimeField()
 
     class Meta:
         model = Tag
-        fields = ("name", "color")
+        fields = ("name", "color", "created_at")
 
 
 class NoteSerializer(serializers.HyperlinkedModelSerializer):
 
     def create(self, validated_data):
-        # import pdb; pdb.set_trace()
         user = self.context["request"].user
 
         note = Note.objects.create(user=user, **validated_data)
@@ -44,8 +49,8 @@ class NoteViewSet(viewsets.ModelViewSet):
         user = self.request.user
         # import pdb; pdb.set_trace()
 
-        if config("DEBUG"):
-            return Note.objects.all()
+        # if config("DEBUG"):
+        #     return Note.objects.all()
         if user.is_anonymous:
             return Note.objects.none()
         else:

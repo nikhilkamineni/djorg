@@ -3,7 +3,8 @@ from django.contrib.auth.models import User
 from uuid import uuid4
 
 class Tag(models.Model):
-    name = models.CharField(max_length=50)
+    # id = models.UUIDField(primary_key=True, default=int, editable=False)
+    name = models.CharField(max_length=50, unique=True)
     color = models.CharField(max_length=15)
     created_at = models.DateTimeField(auto_now_add=True)
 
