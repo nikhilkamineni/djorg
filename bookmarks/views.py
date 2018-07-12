@@ -29,6 +29,8 @@ def index(request):
         'form': BookmarkForm
     }
 
+    print(dir(request.body))
+
     return render(request, 'bookmarks/index.html', context)
 
 def login(request):

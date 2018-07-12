@@ -31,9 +31,10 @@ class Query(graphene.ObjectType):
     def resolve_notesall(self, info):
         """Decide which notes to return"""
         user = info.context.user # Use docs or debugger to find
-        if settings.DEBUG:
-            return NoteModel.objects.all()
-        elif user.is_anonymous:
+        print(user)
+        # if settings.DEBUG:
+        #     return NoteModel.objects.all()
+        if user.is_anonymous:
             return NoteModel.objects.none()
         else:
             return NoteModel.objects.filter(user=user)

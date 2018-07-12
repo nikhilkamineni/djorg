@@ -27,18 +27,26 @@ class TagSerializer(serializers.Serializer):
 class NoteSerializer(serializers.HyperlinkedModelSerializer):
 
     def create(self, validated_data):
-        user = self.context["request"].user
+        print("VALIDATED_DATA: ", validated_data)
+        # print(self.context)
+        print('Trying to save note!')
+        username = self.context["request"].user
+        print("USERNAME: ", username)
+        user_model = User.objects.get(username=username)
+        print("USER_MODEL: ", user_model)
 
-        note = Note.objects.create(user=user, **validated_data)
+        # note = Note.objects.create(user=user, **validated_data)
+        note = Note.objects.create(user=user_model, **validated_data)
 
         return note
 
-    user = UserSerializer(required=False)
-    tags = TagSerializer(many=True)
+    # user = UserSerializer(required=False)
+    # tags = TagSerializer(many=True)
 
     class Meta:
         model = Note
-        fields = ("title", "content", "user", "tags")
+        # fields = ("title", "content", "user", "tags")
+        fields = ("title", "content")
 
 
 class NoteViewSet(viewsets.ModelViewSet):
@@ -46,6 +54,7 @@ class NoteViewSet(viewsets.ModelViewSet):
     queryset = Note.objects.all()
 
     def get_queryset(self):
+        print(self.request.user)
         user = self.request.user
         # import pdb; pdb.set_trace()
 

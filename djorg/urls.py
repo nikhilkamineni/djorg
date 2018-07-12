@@ -16,12 +16,37 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path, re_path
 from django.views.generic import TemplateView
-from rest_framework import routers
-from rest_framework.authtoken import views
 from notes.api import NoteViewSet, NoteTagViewSet
 from bookmarks.api import BookmarkViewSet
 
+from rest_framework import routers
+from rest_framework.authtoken import views
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import authentication_classes, permission_classes, api_view
+
 from graphene_django.views import GraphQLView
+
+# def graphql_token_view():
+#     view = GraphQLView.as_view(schema=schema)
+#     view = permission_classes((IsAuthenticated,))(view)
+#     view = authentication_classes((TokenAuthentication,))(view)
+#     view = api_view['GET')](view)
+#     return view
+
+class DRFAuthenticatedGraphQLView(GraphQLView):
+    def parse_body(self, request):
+        if isinstance(request, rest_framework.request.Request):
+            return request.data
+        return super(APGraphQLView, self).parse_body(request)
+
+    @classmethod
+    def as_view(cls, *args, **kwargs):
+        view = super(APGraphQLView, cls).as_view(*args, **kwargs)
+        view = permission_classes((IsAuthenticated,))(view)
+        view = authentication_classes(api_settings.DEFAULT_AUTHENTICATION_CLASSES)(view)
+        view = api_view(['GET', 'POST'])(view)
+        return view
 
 router = routers.DefaultRouter()
 router.register(r'notes', NoteViewSet)
@@ -32,6 +57,7 @@ urlpatterns = [
     # path('', TemplateView.as_view(template_name='bookmarks/djorg_base.html')),
     re_path(r'^api-token-auth/', views.obtain_auth_token),
     path('', TemplateView.as_view(template_name='index.html')),
+    # path('graphqltoken/', DRFAuthenticatedGraphQLView()),
     path('graphql/', GraphQLView.as_view(graphiql=True)),
     path('api/', include(router.urls)),
     path('admin/', admin.site.urls),

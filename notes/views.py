@@ -7,13 +7,16 @@ from .forms import NoteForm
 def index(request):
 
     if request.method == 'POST':
-        print(request.POST)
+        # print(request.POST)
         form = NoteForm(request.POST)
-        print(form)
+        # print(form)
         if form.is_valid():
             form.save()
         else:
             print("error saving new note")
+        if form.errors:
+            json_data = json.dumps(form.errors)
+            print(json_data)
 
     if request.method == 'GET':
         if request.user.is_anonymous:
