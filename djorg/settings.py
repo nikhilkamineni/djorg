@@ -137,7 +137,7 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         # Use Django's stand django.contrib.auth permission,
         # or allow read-only access for unauthenticated users
-        # "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly",
+        "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly",
         # "rest_framework.permissions.IsAuthenticatedOrReadOnly"
     ],
     "DEFAULT_AUTHENTICATION_CLASSES": (
@@ -148,7 +148,8 @@ REST_FRAMEWORK = {
 }
 
 # Graphene
-GRAPHENE = {"SCHEMA": "notes.schema.schema"}  # dir.filename.varname
+# GRAPHENE = {"SCHEMA": "notes.schema.schema"}  # dir.filename.varname
+GRAPHENE = {"SCHEMA": "djorg.schema.schema"}  # dir.filename.varname
 
 # CORS
 CORS_ORIGIN_ALLOW_ALL = True
