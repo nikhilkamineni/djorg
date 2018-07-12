@@ -7,9 +7,7 @@ from .forms import NoteForm
 def index(request):
 
     if request.method == 'POST':
-        # print(request.POST)
         form = NoteForm(request.POST)
-        # print(form)
         if form.is_valid():
             form.save()
         else:

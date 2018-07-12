@@ -4,7 +4,7 @@ from .models import Note, Tag
 from decouple import config
 
 
-class UserSerializer(serializers.Serializer):
+class UserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField()
     username = serializers.CharField(max_length=100)
     id = serializers.CharField()
@@ -54,7 +54,6 @@ class NoteViewSet(viewsets.ModelViewSet):
     queryset = Note.objects.all()
 
     def get_queryset(self):
-        print(self.request.user)
         user = self.request.user
         # import pdb; pdb.set_trace()
 
@@ -69,3 +68,16 @@ class NoteViewSet(viewsets.ModelViewSet):
 class NoteTagViewSet(viewsets.ModelViewSet):
     serializer_class = TagSerializer
     queryset = Tag.objects.all()
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+
+    def get_queryset(self):
+        user = self.request.user
+
+        if user.is_anonymous:
+            return User.objects.all()
+        else:
+            return User.objects.filter(username=user)

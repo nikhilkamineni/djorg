@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path, re_path
 from django.views.generic import TemplateView
-from notes.api import NoteViewSet, NoteTagViewSet
+from notes.api import NoteViewSet, NoteTagViewSet, UserViewSet
 from bookmarks.api import BookmarkViewSet
 
 from rest_framework import routers
@@ -52,9 +52,9 @@ router = routers.DefaultRouter()
 router.register(r'notes', NoteViewSet)
 router.register(r'notetags', NoteTagViewSet)
 router.register(r'bookmarks', BookmarkViewSet)
+router.register(r'users', UserViewSet)
 
 urlpatterns = [
-    # path('', TemplateView.as_view(template_name='bookmarks/djorg_base.html')),
     re_path(r'^api-token-auth/', views.obtain_auth_token),
     path('', TemplateView.as_view(template_name='index.html')),
     # path('graphqltoken/', DRFAuthenticatedGraphQLView()),
